@@ -4,18 +4,18 @@ define aws-cloudwatch-tools::monitor-disk (
     $frequency_minutes,
     $access_key, 
     $secret_key,
-    $install_dir,
-    $owner,
-    $group,
+    $install_dir = '/opt',
+    $owner = 'root',
+    $group = 'root',
   ) {
 
   $file_name = "CloudWatchMonitoringScripts-v1.1.0.zip"
   $extracted_dir = "aws-scripts-mon"
   $scripts_dir = "${install_dir}/${extracted_dir}"
 
-  $packages = [ "libwww-perl", "libcrypt-ssleay-perl" ]
-  Package { ensure => "installed" }
-  package { $packages: }
+  package { [ "libwww-perl", "libcrypt-ssleay-perl" ]:
+        ensure => installed,
+  }
 
   exec { "download":
         user    => $owner,
@@ -31,7 +31,7 @@ define aws-cloudwatch-tools::monitor-disk (
         group   => $group,
         command => "unzip ${file_name}",
         cwd     => $install_dir,
-        unless  => "find ${install_dir} | grep ${extracted_dir}",
+        creates => $scripts_dir,
         require => [Exec["download"]]
   }
 
@@ -44,7 +44,6 @@ define aws-cloudwatch-tools::monitor-disk (
 
   cron { "monitor $disk_path":
     command => "${scripts_dir}/mon-put-instance-data.pl --disk-space-util --disk-path=${disk_path} --from-cron --aws-credential-file=${scripts_dir}/awscreds.conf",
-    user    => root,
     minute  => "*/$frequency_minutes",
     require => [File["${scripts_dir}/awscreds.conf"], Package["libwww-perl"], Package["libcrypt-ssleay-perl"]]
   }
