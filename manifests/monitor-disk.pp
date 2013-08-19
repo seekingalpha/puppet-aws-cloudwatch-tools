@@ -1,46 +1,15 @@
 # Module for installing CloudWatchMonitoringScripts and using them to schedule Cloud Watch metrics update 
 define aws-cloudwatch-tools::monitor-disk (
     $disk_path = $title,
-    $frequency_minutes,
-    $access_key, 
-    $secret_key,
+    $frequency_minutes = 5,
     $install_dir = '/opt',
-    $owner = 'root',
-    $group = 'root',
   ) {
 
-  $file_name = "CloudWatchMonitoringScripts-v1.1.0.zip"
-  $extracted_dir = "aws-scripts-mon"
-  $scripts_dir = "${install_dir}/${extracted_dir}"
+  $scripts_dir = "${install_dir}/aws-scripts-mon"
+  
+  include Aws-cloudwatch-tools::Packages
 
-  package { [ "libwww-perl", "libcrypt-ssleay-perl" ]:
-        ensure => installed,
-  }
-
-  exec { "download":
-        user    => $owner,
-        group   => $group,
-        cwd     => $install_dir,
-        command => "wget http://ec2-downloads.s3.amazonaws.com/cloudwatch-samples/${file_name}",
-        creates => "${install_dir}/${file_name}",
-        timeout => 3600,
-  }
-
-  exec { "extract":
-        user    => $owner,
-        group   => $group,
-        command => "unzip ${file_name}",
-        cwd     => $install_dir,
-        creates => $scripts_dir,
-        require => [Exec["download"]]
-  }
-
-  file { "${scripts_dir}/awscreds.conf":
-        content => template('aws-cloudwatch-tools/awscreds.erb'),
-        owner   => $owner,
-        group   => $group,
-        require => Exec["extract"]
-  }
+  realize Package['libwww-perl', "libcrypt-ssleay-perl"]
 
   cron { "monitor $disk_path":
     command => "${scripts_dir}/mon-put-instance-data.pl --disk-space-util --disk-path=${disk_path} --from-cron --aws-credential-file=${scripts_dir}/awscreds.conf",
