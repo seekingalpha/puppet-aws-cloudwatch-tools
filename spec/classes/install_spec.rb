@@ -1,12 +1,16 @@
 require 'spec_helper'
 
 describe 'aws-cloudwatch-tools::install' do
-   let(:title) { 'install-aws' }
    let(:params) { {:access_key => 'ABC', :secret_key => '123'} }
 
    file_name = 'CloudWatchMonitoringScripts-v1.1.0.zip'
 
    it do
+
+      should contain_package('libwww-perl').with_ensure('installed')
+      should contain_package('libcrypt-ssleay-perl').with_ensure('installed')
+      should contain_package('unzip').with_ensure('installed')
+
       should contain_exec('download-aws-tools').with({
          'cwd' => '/opt',
          'creates' => "/opt/#{file_name}",
@@ -20,9 +24,9 @@ describe 'aws-cloudwatch-tools::install' do
    end
 
    it do
-      should contain_file('/opt/aws-scripts-mon/awscreds.conf')
-        .with_content(/AWSAccessKeyId=ABC/)
-        .with_content(/AWSSecretKey=123/)
+      should contain_file('/opt/aws-scripts-mon/awscreds.conf').
+          with_content(/AWSAccessKeyId=ABC/).
+          with_content(/AWSSecretKey=123/)
    end
 
    context 'with install_dir => /opt/tools' do

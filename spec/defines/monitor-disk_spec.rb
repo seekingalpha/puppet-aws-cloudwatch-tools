@@ -8,9 +8,6 @@ describe 'aws-cloudwatch-tools::monitor-disk' do
          'minute' => '*/5',
          'command' => "/opt/aws-scripts-mon/mon-put-instance-data.pl --disk-space-util --disk-path=/mnt --from-cron --aws-credential-file=/opt/aws-scripts-mon/awscreds.conf",
       })
-
-      should contain_package('libwww-perl').with_ensure('installed')
-      should contain_package('libcrypt-ssleay-perl').with_ensure('installed')
    end
 
    context 'with frequency_minutes => 10' do
