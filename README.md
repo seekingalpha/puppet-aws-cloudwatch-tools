@@ -10,10 +10,9 @@ Usage
 
 ```puppet
 # First, install the tools package:
-aws-cloudwatch-tools::install { 'install-aws-tools':
+class { 'aws-cloudwatch-tools::install':
     access_key  => "your-aws-access-key",
-    secret_key  => "your-aws-secret-key",
-    install_dir => "/opt/tools",   # Optional, default is /opt
+    secret_key  => "your-aws-secret-key"
 }
 
 # Then, you can monitor any number of disks (paths):
