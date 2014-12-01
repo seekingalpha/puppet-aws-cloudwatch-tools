@@ -1,11 +1,11 @@
 # Install AWS CloudWatch Tools
-class aws-cloudwatch-tools::install (
+class awscloudwatchtools::install (
     $access_key,
     $secret_key,
     $install_dir = '/opt',
 ) {
 
-  include Aws-cloudwatch-tools::Packages
+  include Awscloudwatchtools::Packages
   realize Package['libwww-perl', "libcrypt-ssleay-perl", "unzip"]
 
   $file_name = "CloudWatchMonitoringScripts-v1.1.0.zip"
@@ -26,7 +26,7 @@ class aws-cloudwatch-tools::install (
   }
 
   file { "${scripts_dir}/awscreds.conf":
-    content => template('aws-cloudwatch-tools/awscreds.erb'),
+    content => template('awscloudwatchtools/awscreds.erb'),
     require => Exec["extract-aws-tools"]
   }
 }

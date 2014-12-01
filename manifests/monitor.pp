@@ -1,4 +1,4 @@
-class aws-cloudwatch-tools::monitor(
+class awscloudwatchtools::monitor(
   $frequency_minutes = 5,
   $mem_util = false,
   $mem_used = false,
@@ -56,7 +56,7 @@ class aws-cloudwatch-tools::monitor(
   cron { "monitor_cloudwatch":
     command => "${scripts_dir}/mon-put-instance-data.pl ${str_mem_util}${str_mem_avail}${str_mem_used}${str_swap_util}${str_swap_used} --from-cron --aws-credential-file=${scripts_dir}/awscreds.conf",
     minute  => "*/$frequency_minutes",
-    require => [Class[Aws-cloudwatch-tools::Install], Package["libwww-perl"], Package["libcrypt-ssleay-perl"]]
+    require => [Class[Awscloudwatchtools::Install], Package["libwww-perl"], Package["libcrypt-ssleay-perl"]]
   }
 
 }

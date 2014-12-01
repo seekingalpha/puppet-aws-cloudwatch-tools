@@ -1,4 +1,4 @@
-name 'aws-cloudwatch-tools'
+name 'awscloudwatchtools'
 version '0.0.1'
 description "Installs and activates AWS CloudWatch Tools for sending system metrics to CloudWatch console"
 license 'Apache License, Version 2.0'
