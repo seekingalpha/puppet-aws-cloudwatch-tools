@@ -13,13 +13,13 @@ class awscloudwatchtools::install (
 
   exec { "download-aws-tools":
     cwd     => $install_dir,
-    command => "wget http://ec2-downloads.s3.amazonaws.com/cloudwatch-samples/${file_name}",
+    command => "/usr/bin/wget http://ec2-downloads.s3.amazonaws.com/cloudwatch-samples/${file_name}",
     creates => "${install_dir}/${file_name}",
     timeout => 3600,
   }
 
   exec { "extract-aws-tools":
-    command => "unzip ${file_name}",
+    command => "/usr/bin/unzip ${file_name}",
     cwd     => $install_dir,
     creates => $scripts_dir,
     require => [Exec["download-aws-tools"], Package["unzip"]]
