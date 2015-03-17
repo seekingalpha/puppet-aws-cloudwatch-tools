@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'awscloudwatchtools::install' do
    let(:params) { {:access_key => 'ABC', :secret_key => '123'} }
 
-   file_name = 'CloudWatchMonitoringScripts-v1.1.0.zip'
+   file_name = 'CloudWatchMonitoringScripts-v1.2.0.zip'
 
    it do
 
