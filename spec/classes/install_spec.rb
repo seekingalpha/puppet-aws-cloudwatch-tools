@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'aws-cloudwatch-tools::install' do
+describe 'awscloudwatchtools::install' do
    let(:params) { {:access_key => 'ABC', :secret_key => '123'} }
 
    file_name = 'CloudWatchMonitoringScripts-v1.1.0.zip'
@@ -38,6 +38,15 @@ describe 'aws-cloudwatch-tools::install' do
             'creates' => "/opt/tools/#{file_name}",
          })
       end
+   end
+
+   context 'on ubunutu 14.04' do
+     let(:facts) { { :operatingsystem => 'Ubuntu', :lsbdistcodename => 'trusty' } }
+
+     it do
+       should contain_package('libdatetime-perl').with_ensure('installed')
+       should contain_package('libswitch-perl').with_ensure('installed')
+     end
    end
 
 end

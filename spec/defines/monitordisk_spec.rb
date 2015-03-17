@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'aws-cloudwatch-tools::monitor-disk' do
+describe 'awscloudwatchtools::monitordisk' do
    let(:title) { '/mnt' }
 
    it do

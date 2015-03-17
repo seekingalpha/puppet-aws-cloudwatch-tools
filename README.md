@@ -10,16 +10,16 @@ Usage
 
 ```puppet
 # First, install the tools package:
-class { 'aws-cloudwatch-tools::install':
+class { 'awscloudwatchtools::install':
     access_key  => "your-aws-access-key",
     secret_key  => "your-aws-secret-key"
 }
 
 # Then, you can monitor any number of disks (paths):
-aws-cloudwatch-tools::monitor-disk { ['/', '/dev']: }
+awscloudwatchtools::monitor-disk { ['/', '/dev']: }
 
 # You can also specify a custom frequency (default is 5 minutes):
-aws-cloudwatch-tools::monitor-disk { '/mnt':
+awscloudwatchtools::monitor-disk { '/mnt':
     frequency_minutes => 10,
 }
 ```

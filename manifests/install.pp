@@ -19,9 +19,10 @@ class awscloudwatchtools::install (
   }
 
   exec { "extract-aws-tools":
-    command => "/usr/bin/unzip ${file_name}",
+    command => "unzip ${file_name}",
     cwd     => $install_dir,
     creates => $scripts_dir,
+    path    => '/usr/bin',
     require => [Exec["download-aws-tools"], Package["unzip"]]
   }
 
