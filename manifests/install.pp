@@ -13,7 +13,7 @@ class awscloudwatchtools::install (
 
   exec { "download-aws-tools":
     cwd     => $install_dir,
-    command => "/usr/bin/wget http://ec2-downloads.s3.amazonaws.com/cloudwatch-samples/${file_name}",
+    command => "/usr/bin/wget http://aws-cloudwatch.s3.amazonaws.com/downloads/${file_name}",
     creates => "${install_dir}/${file_name}",
     timeout => 3600,
   }
