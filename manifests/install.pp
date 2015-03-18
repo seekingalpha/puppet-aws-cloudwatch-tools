@@ -8,7 +8,7 @@ class awscloudwatchtools::install (
   include Awscloudwatchtools::Packages
   realize Package['libwww-perl', "libcrypt-ssleay-perl", "unzip"]
 
-  $file_name = "CloudWatchMonitoringScripts-v1.2.0.zip"
+  $file_name = "CloudWatchMonitoringScripts-1.2.0.zip"
   $scripts_dir = "${install_dir}/aws-scripts-mon"
 
   exec { "download-aws-tools":
