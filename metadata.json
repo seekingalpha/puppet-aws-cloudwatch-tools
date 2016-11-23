@@ -1,0 +1,14 @@
+{
+  "name": "awscloudwatchtools",
+  "version": "0.0.1",
+  "author": "kenshoo",
+  "summary": "Installs and activates AWS CloudWatch Tools for sending system metrics to CloudWatch console",
+  "license": "Apache-2.0",
+  "source": "https://github.com/kenshoo/puppet-aws-cloudwatch-tools",
+  "project_page": "https://github.com/kenshoo/puppet-aws-cloudwatch-tools",
+  "issues_url": "https://github.com/kenshoo/puppet-aws-cloudwatch-tools/issues",
+  "dependencies": [
+      {"name":"puppetlabs-stdlib","version_requirement":">= 4.9.0"}
+  ]
+}
+
