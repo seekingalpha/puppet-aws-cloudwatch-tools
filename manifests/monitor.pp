@@ -51,10 +51,12 @@ class awscloudwatchtools::monitor (
   } else {
     $aws_cli_config_file = ''
   }
+  $monitor_command = "${awscloudwatchtools::scripts_dir}/mon-put-instance-data.pl ${monitor_opts} --from-cron ${aws_cli_config_file}"
+  $cron_time = "*/${frequency_minutes} * * * *"
 
-  cron { 'monitor_cloudwatch':
-    command => "${awscloudwatchtools::scripts_dir}/mon-put-instance-data.pl ${monitor_opts} --from-cron ${aws_cli_config_file}",
-    minute  => "*/${frequency_minutes}",
+  file{ '/etc/cron.d/monitor_cloudwatch':
+    content => "${cron_time} root ${monitor_command}",
+    mode    => '0644',
     require => [
       Class[Awscloudwatchtools],
       Package['libwww-perl'],

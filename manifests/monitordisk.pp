@@ -10,10 +10,12 @@ define awscloudwatchtools::monitordisk (
   } else {
     $aws_cli_config_file = ''
   }
+  $monitordisk_command = "${awscloudwatchtools::scripts_dir}/mon-put-instance-data.pl --disk-space-util --disk-path=${disk_path} --from-cron ${aws_cli_config_file}"
+  $cron_time = "*/${frequency_minutes} * * * *"
 
-  cron { "monitor_${disk_path}":
-    command => "${awscloudwatchtools::scripts_dir}/mon-put-instance-data.pl --disk-space-util --disk-path=${disk_path} --from-cron ${aws_cli_config_file}",
-    minute  => "*/${frequency_minutes}",
+  file { "/etc/cron.d/monitor_${disk_path}":
+    content => "${cron_time} root ${monitordisk_command}",
+    mode    => '0644',
     require => [
       Package['libwww-perl'],
       Package['libcrypt-ssleay-perl'],
