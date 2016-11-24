@@ -14,6 +14,8 @@ define awscloudwatchtools::monitordisk (
     require => [
       Package['libwww-perl'],
       Package['libcrypt-ssleay-perl'],
+      Package['libdatetime-perl'],
+      Package['libswitch-perl'],
     ],
   }
 

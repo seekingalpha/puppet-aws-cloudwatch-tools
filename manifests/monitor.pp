@@ -55,7 +55,9 @@ class awscloudwatchtools::monitor (
     require => [
       Class[Awscloudwatchtools],
       Package['libwww-perl'],
-      Package['libcrypt-ssleay-perl']
+      Package['libcrypt-ssleay-perl'],
+      Package['libdatetime-perl'],
+      Package['libswitch-perl'],
     ],
   }
 
