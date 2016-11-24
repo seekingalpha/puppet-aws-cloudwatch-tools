@@ -46,12 +46,7 @@ class awscloudwatchtools::monitor (
   }
 
   $monitor_opts = "${str_mem_util}${str_mem_avail}${str_mem_used}${str_swap_util}${str_swap_used}"
-  if defined(File["${awscloudwatchtools::scripts_dir}/awscreds.conf"]) {
-    $aws_cli_config_file = "--aws-credential-file=${awscloudwatchtools::scripts_dir}/awscreds.conf"
-  } else {
-    $aws_cli_config_file = ''
-  }
-  $monitor_command = "${awscloudwatchtools::scripts_dir}/mon-put-instance-data.pl ${monitor_opts} --from-cron ${aws_cli_config_file}"
+  $monitor_command = "${awscloudwatchtools::scripts_dir}/mon-put-instance-data.pl ${monitor_opts} --from-cron ${awscloudwatchtools::aws_cli_config_file}"
   $cron_time = "*/${frequency_minutes} * * * *"
 
   file{ '/etc/cron.d/monitor_cloudwatch':

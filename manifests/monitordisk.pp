@@ -5,12 +5,7 @@ define awscloudwatchtools::monitordisk (
 ) {
   include awscloudwatchtools
 
-  if defined(File["${awscloudwatchtools::scripts_dir}/awscreds.conf"]) {
-    $aws_cli_config_file = "--aws-credential-file=${scripts_dir}/awscreds.conf"
-  } else {
-    $aws_cli_config_file = ''
-  }
-  $monitordisk_command = "${awscloudwatchtools::scripts_dir}/mon-put-instance-data.pl --disk-space-util --disk-path=${disk_path} --from-cron ${aws_cli_config_file}"
+  $monitordisk_command = "${awscloudwatchtools::scripts_dir}/mon-put-instance-data.pl --disk-space-util --disk-path=${disk_path} --from-cron ${awscloudwatchtools::aws_cli_config_file}"
   $cron_time = "*/${frequency_minutes} * * * *"
 
   file { "/etc/cron.d/monitor_${disk_path}":

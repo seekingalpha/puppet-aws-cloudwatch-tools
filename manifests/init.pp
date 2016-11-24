@@ -33,10 +33,14 @@ class awscloudwatchtools (
 
   if $access_key and $secret_key {
     validate_string($access_key, $secret_key)
-    file { "${scripts_dir}/awscreds.conf":
+    $aws_cred_file = "${scripts_dir}/awscreds.conf"
+    file { $aws_cred_file:
       content => template('awscloudwatchtools/awscreds.erb'),
       require => Exec['extract-aws-tools'],
     }
+    $aws_cli_config_file = "--aws-credential-file=${aws_cred_file}"
+  } else {
+    $aws_cli_config_file = ''
   }
 
   if !empty($monitor_disks){
