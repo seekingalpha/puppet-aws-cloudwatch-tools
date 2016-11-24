@@ -34,7 +34,7 @@ class awscloudwatchtools::monitor (
   }
 
   if $swap_util {
-    $str_swap_util = ' --swap_util'
+    $str_swap_util = ' --swap-util'
   } else {
     $str_swap_util = ''
   }
