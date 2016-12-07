@@ -50,7 +50,7 @@ class awscloudwatchtools::monitor (
   $cron_time = "*/${frequency_minutes} * * * *"
 
   file{ '/etc/cron.d/monitor_cloudwatch':
-    content => "${cron_time} root ${monitor_command}\n",
+    content => "${cron_time} root ${monitor_command} 1>/dev/null 2>&1 || true\n",
     mode    => '0644',
     require => [
       Class[Awscloudwatchtools],

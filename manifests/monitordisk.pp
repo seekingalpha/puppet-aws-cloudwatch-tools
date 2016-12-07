@@ -9,7 +9,7 @@ define awscloudwatchtools::monitordisk (
   $cron_time = "*/${frequency_minutes} * * * *"
 
   file { "/etc/cron.d/monitor_${title}":
-    content => "${cron_time} root ${monitordisk_command}\n",
+    content => "${cron_time} root ${monitordisk_command} 1>/dev/null 2>&1 || true\n",
     mode    => '0644',
     require => [
       Package['libwww-perl'],
